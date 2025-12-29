@@ -1,0 +1,34 @@
+name: Build pycdc (Windows EXE)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@v3
+
+      - name: Configure (Release)
+        run: |
+          cmake -S . -B build -A x64
+
+      - name: Build
+        run: |
+          cmake --build build --config Release
+
+      - name: Upload EXE artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pycdc-windows-exe
+          path: |
+            build/Release/pycdc.exe
+            build/Release/pycdas.exe
