@@ -15,15 +15,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup CMake
-        uses: lukka/get-cmake@v3
+        uses: lukka/get-cmake@v3.27.1   # <- specify exact version
 
       - name: Configure (Release)
-        run: |
-          cmake -S . -B build -A x64
+        run: cmake -S . -B build -A x64
 
       - name: Build
-        run: |
-          cmake --build build --config Release
+        run: cmake --build build --config Release
 
       - name: Upload EXE artifacts
         uses: actions/upload-artifact@v4
